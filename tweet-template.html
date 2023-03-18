@@ -278,8 +278,8 @@
 
                                             <div class="mb-3">
                                                 <div class="row">
-                                                    <div class="d-flex justify-content-center">
-                                                        <div class="card template w-300px mx-3">
+                                                    <div class="col-sm-6">
+                                                        <div class="card template mx-3">
                                                             <input type="hidden" value="1"/>
                                                             <div class="card-body">
                                                                 <h6 class="card-subtitle mb-1 text-muted text-uppercase">基本のテンプレート<a href="#">:提供@Hey</a></h6>
@@ -287,6 +287,19 @@
                                                                     ・総論(伝えたいことを宣言)<br>
                                                                     ・各論(総論を具体的かつ詳細に)<br>
                                                                     ・結論(まとめ)<br>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="card template mx-3">
+                                                            <input type="hidden" value="2"/>
+                                                            <div class="card-body">
+                                                                <h6 class="card-subtitle mb-1 text-muted text-uppercase">コンテンツ共有のテンプレート<a href="#">:提供@Hey</a></h6>
+                                                                <p class="card-text">
+                                                                    ・コンテンツについて<br>
+                                                                    ・ユーザーへの問いかけ<br>
+                                                                    ・行動喚起<br>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -324,6 +337,9 @@
                                             var val = checkTemplate[0].firstElementChild.value;
                                             if(val == 1){
                                                 document.getElementById("message").value = '・総論(伝えたいことを宣言)\nPalTextは、テキストに寄り添った便利ツールです。\n・各論(総論を具体的かつ詳細にする)\n文章に無駄が多く、伝えたい内容が伝わらないという問題を抱える方に、テンプレート機能を提案しています。\n・結論(まとめ)\nPalTextは、テンプレート機能をもった、テキストに寄り添った便利ツールです。';
+                                            }
+                                            if(val == 2){
+                                                document.getElementById("message").value = '・コンテンツについて\n〇〇について公開しました\n・ユーザーへの問いかけ\nみなさんはどう思われますか？\n・行動喚起\nぜひ、コメントやスレッドでご意見ください！';                                                
                                             }
                                         }
                                     });
