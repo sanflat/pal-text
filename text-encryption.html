@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light"  data-sidebar-behaviour="fixed" data-navigation-color="inverted" data-is-fluid="true">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta content="Webinning" name="author" />
+        
+            <!-- Theme CSS -->
+            <link rel="stylesheet" href="./assets/css/theme.bundle.css" id="stylesheetLTR" />        
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" media="print" onload="this.onload=null;this.removeAttribute('media');" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap">
+        
+        <!-- no-JS fallback -->
+        <noscript>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap">
+        </noscript>
+        
+        <script>
+         // Theme switcher
+        
+            let themeSwitcher = document.getElementById('themeSwitcher');
+        
+            const getPreferredTheme = () => {
+                if (localStorage.getItem('theme') != null) {
+                    return localStorage.getItem('theme');
+                }
+        
+                return document.documentElement.dataset.theme;
+            };
+        
+            const setTheme = function (theme) {
+                if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.dataset.theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                } else {
+                    document.documentElement.dataset.theme = theme;
+                }
+        
+                localStorage.setItem('theme', theme);
+            };
+        
+            const showActiveTheme = theme => {
+                const activeBtn = document.querySelector(`[data-theme-value="${theme}"]`);
+        
+                document.querySelectorAll('[data-theme-value]').forEach(element => {
+                    element.classList.remove('active');
+                });
+        
+                activeBtn && activeBtn.classList.add('active');
+        
+             // Set button if demo mode is enabled
+                document.querySelectorAll('[data-theme-control="theme"]').forEach(element => {
+                    if (element.value == theme) {
+                        element.checked = true;
+                    }
+                });
+            };
+        
+            function reloadPage() {
+                window.location = window.location.pathname;
+            }
+        
+        
+            setTheme(getPreferredTheme());
+        
+            if(typeof themeSwitcher != 'undefined') {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    if(localStorage.getItem('theme') != null) {
+                        if (localStorage.getItem('theme') == 'auto') {
+                            reloadPage();
+                        }
+                    }
+                });
+        
+                window.addEventListener('load', () => {
+                    showActiveTheme(getPreferredTheme());
+                    
+                    document.querySelectorAll('[data-theme-value]').forEach(element => {
+                        element.addEventListener('click', () => {
+                            const theme = element.getAttribute('data-theme-value');
+        
+                            localStorage.setItem('theme', theme);
+                            reloadPage();
+                        })
+                    })
+                });
+            }
+        </script>
+        <!-- Favicon -->
+        <link rel="icon" href="./assets/favicon/favicon.ico" sizes="any" />
+        
+            <!-- Demo script -->
+            <script>
+                var themeConfig = {
+                    theme: JSON.parse('"light"'),
+                    isRTL: JSON.parse('false'),
+                    isFluid: JSON.parse('true'),
+                    sidebarBehaviour: JSON.parse('"fixed"'),
+                    navigationColor: JSON.parse('"inverted"')
+                };
+                
+                var isRTL = localStorage.getItem('isRTL') === 'true',
+                    isFluid = localStorage.getItem('isFluid') === 'true',
+                    theme = localStorage.getItem('theme'),
+                    sidebarSizing = localStorage.getItem('sidebarSizing'),
+                    linkLTR = document.getElementById('stylesheetLTR'),
+                    linkRTL = document.getElementById('stylesheetRTL'),
+                    html = document.documentElement;
+        
+                if (isRTL) {
+                    linkLTR.setAttribute('disabled', '');
+                    html.setAttribute('dir', 'rtl');
+                } else {
+                    linkLTR.removeAttribute('disabled');
+                    html.removeAttribute('dir');
+                }
+            </script>
+        
+        <!-- Page Title -->
+        <title>テキスト暗号化 | PalText</title>
+    </head>
+    
+    <body>
+            <!-- THEME CONFIGURATION -->
+            <script>
+                let themeAttrs = document.documentElement.dataset;
+            
+                for(let attr in themeAttrs) {
+                    if(localStorage.getItem(attr) != null) {
+                        document.documentElement.dataset[attr] = localStorage.getItem(attr);
+            
+                        if (theme === 'auto') {
+                            document.documentElement.dataset.theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            
+                            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                                e.matches ? document.documentElement.dataset.theme = 'dark' : document.documentElement.dataset.theme = 'light';
+                            });
+                        }
+                    }
+                }
+            </script>
+        <!-- NAVIGATION -->
+        <nav id="mainNavbar" class="navbar navbar-vertical navbar-expand-lg scrollbar bg-dark navbar-dark">
+            
+            <!-- Theme configuration (navbar) -->
+                <script>
+                    let navigationColor = localStorage.getItem('navigationColor'),
+                        navbar = document.getElementById('mainNavbar');
+                
+                    if(navigationColor != null && navbar != null) {
+                        if(navigationColor == 'inverted') {
+                            navbar.classList.add('bg-dark', 'navbar-dark');
+                            navbar.classList.remove('bg-white', 'navbar-light');
+                        } else {
+                            navbar.classList.add('bg-white', 'navbar-light');
+                            navbar.classList.remove('bg-dark', 'navbar-dark');
+                        }
+                    }
+                </script>    
+            <div class="container-fluid">
+                
+                <!-- Brand -->
+                <a class="navbar-brand" href="./index.html">
+                    <img src="./assets/images/logo-small.svg" class="navbar-brand-img logo-light logo-small" alt="..." width="19" height="30">
+                    <img src="./assets/images/logo.svg" class="navbar-brand-img logo-light logo-large" alt="..." width="125" height="30">
+        
+                    <img src="./assets/images/logo-dark-small.svg" class="navbar-brand-img logo-dark logo-small" alt="..." width="19" height="30">
+                    <img src="./assets/images/logo-dark.svg" class="navbar-brand-img logo-dark logo-large" alt="..." width="125" height="30">
+                </a>
+        
+                <!-- Navbar toggler -->
+                <a href="javascript: void(0);" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </a>
+        
+                <!-- Collapse -->
+                <div class="collapse navbar-collapse" id="sidenavCollapse">
+        
+                    <!-- Navigation -->
+                    <div id="navigation"></div>
+                    <!-- End of Navigation -->
+
+                </div>
+                <!-- End of Collapse -->
+            </div>
+        </nav>
+        <!-- MAIN CONTENT -->
+        <main>
+
+            <!-- HEADER -->
+            <header class="container-fluid d-flex py-6 mb-4">
+            
+                <!-- Top buttons -->
+                <div class="d-flex align-items-center ms-auto me-n1 me-lg-n2">
+            
+                    <!-- Dropdown -->
+                    <div class="dropdown" id="themeSwitcher">
+                        <a href="javascript: void(0);" class="dropdown-toggle no-arrow d-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm mx-1 mx-lg-2 w-40px h-40px link-secondary" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-offset="0,10">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="18" width="18"><g><path d="M12,4.64A7.36,7.36,0,1,0,19.36,12,7.37,7.37,0,0,0,12,4.64Zm0,12.72A5.36,5.36,0,1,1,17.36,12,5.37,5.37,0,0,1,12,17.36Z" style="fill: currentColor"/><path d="M12,3.47a1,1,0,0,0,1-1V1a1,1,0,0,0-2,0V2.47A1,1,0,0,0,12,3.47Z" style="fill: currentColor"/><path d="M4.55,6a1,1,0,0,0,.71.29A1,1,0,0,0,6,6,1,1,0,0,0,6,4.55l-1-1A1,1,0,0,0,3.51,4.93Z" style="fill: currentColor"/><path d="M2.47,11H1a1,1,0,0,0,0,2H2.47a1,1,0,1,0,0-2Z" style="fill: currentColor"/><path d="M4.55,18l-1,1a1,1,0,0,0,0,1.42,1,1,0,0,0,.71.29,1,1,0,0,0,.71-.29l1-1A1,1,0,0,0,4.55,18Z" style="fill: currentColor"/><path d="M12,20.53a1,1,0,0,0-1,1V23a1,1,0,0,0,2,0V21.53A1,1,0,0,0,12,20.53Z" style="fill: currentColor"/><path d="M19.45,18A1,1,0,0,0,18,19.45l1,1a1,1,0,0,0,.71.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.42Z" style="fill: currentColor"/><path d="M23,11H21.53a1,1,0,0,0,0,2H23a1,1,0,0,0,0-2Z" style="fill: currentColor"/><path d="M18.74,6.26A1,1,0,0,0,19.45,6l1-1a1,1,0,1,0-1.42-1.42l-1,1A1,1,0,0,0,18,6,1,1,0,0,0,18.74,6.26Z" style="fill: currentColor"/></g></svg>
+                        </a>
+            
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <button type="button" class="dropdown-item active" data-theme-value="light">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="me-2" height="18" width="18"><g><path d="M12,4.64A7.36,7.36,0,1,0,19.36,12,7.37,7.37,0,0,0,12,4.64Zm0,12.72A5.36,5.36,0,1,1,17.36,12,5.37,5.37,0,0,1,12,17.36Z" style="fill: currentColor"/><path d="M12,3.47a1,1,0,0,0,1-1V1a1,1,0,0,0-2,0V2.47A1,1,0,0,0,12,3.47Z" style="fill: currentColor"/><path d="M4.55,6a1,1,0,0,0,.71.29A1,1,0,0,0,6,6,1,1,0,0,0,6,4.55l-1-1A1,1,0,0,0,3.51,4.93Z" style="fill: currentColor"/><path d="M2.47,11H1a1,1,0,0,0,0,2H2.47a1,1,0,1,0,0-2Z" style="fill: currentColor"/><path d="M4.55,18l-1,1a1,1,0,0,0,0,1.42,1,1,0,0,0,.71.29,1,1,0,0,0,.71-.29l1-1A1,1,0,0,0,4.55,18Z" style="fill: currentColor"/><path d="M12,20.53a1,1,0,0,0-1,1V23a1,1,0,0,0,2,0V21.53A1,1,0,0,0,12,20.53Z" style="fill: currentColor"/><path d="M19.45,18A1,1,0,0,0,18,19.45l1,1a1,1,0,0,0,.71.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.42Z" style="fill: currentColor"/><path d="M23,11H21.53a1,1,0,0,0,0,2H23a1,1,0,0,0,0-2Z" style="fill: currentColor"/><path d="M18.74,6.26A1,1,0,0,0,19.45,6l1-1a1,1,0,1,0-1.42-1.42l-1,1A1,1,0,0,0,18,6,1,1,0,0,0,18.74,6.26Z" style="fill: currentColor"/></g></svg>
+                                    ライト モード
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="dropdown-item" data-theme-value="dark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="me-2" height="18" width="18"><path d="M19.57,23.34a1,1,0,0,0,0-1.9,9.94,9.94,0,0,1,0-18.88,1,1,0,0,0,.68-.94,1,1,0,0,0-.68-.95A11.58,11.58,0,0,0,8.88,2.18,12.33,12.33,0,0,0,3.75,12a12.31,12.31,0,0,0,5.11,9.79A11.49,11.49,0,0,0,15.61,24,12.55,12.55,0,0,0,19.57,23.34ZM10,20.17A10.29,10.29,0,0,1,5.75,12a10.32,10.32,0,0,1,4.3-8.19A9.34,9.34,0,0,1,15.59,2a.17.17,0,0,1,.17.13.18.18,0,0,1-.07.2,11.94,11.94,0,0,0-.18,19.21.25.25,0,0,1-.16.45A9.5,9.5,0,0,1,10,20.17Z" style="fill: currentColor"/></svg>
+                                    ダーク モード
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="dropdown-item" data-theme-value="auto">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="me-2" height="18" width="18"><path d="M24,12a1,1,0,0,0-1-1H19.09a.51.51,0,0,1-.49-.4,6.83,6.83,0,0,0-.94-2.28.5.5,0,0,1,.06-.63l2.77-2.76a1,1,0,1,0-1.42-1.42L16.31,6.28a.5.5,0,0,1-.63.06A6.83,6.83,0,0,0,13.4,5.4a.5.5,0,0,1-.4-.49V1a1,1,0,0,0-2,0V4.91a.51.51,0,0,1-.4.49,6.83,6.83,0,0,0-2.28.94.5.5,0,0,1-.63-.06L4.93,3.51A1,1,0,0,0,3.51,4.93L6.28,7.69a.5.5,0,0,1,.06.63A6.83,6.83,0,0,0,5.4,10.6a.5.5,0,0,1-.49.4H1a1,1,0,0,0,0,2H4.91a.51.51,0,0,1,.49.4,6.83,6.83,0,0,0,.94,2.28.5.5,0,0,1-.06.63L3.51,19.07a1,1,0,1,0,1.42,1.42l2.76-2.77a.5.5,0,0,1,.63-.06,6.83,6.83,0,0,0,2.28.94.5.5,0,0,1,.4.49V23a1,1,0,0,0,2,0V19.09a.51.51,0,0,1,.4-.49,6.83,6.83,0,0,0,2.28-.94.5.5,0,0,1,.63.06l2.76,2.77a1,1,0,1,0,1.42-1.42l-2.77-2.76a.5.5,0,0,1-.06-.63,6.83,6.83,0,0,0,.94-2.28.5.5,0,0,1,.49-.4H23A1,1,0,0,0,24,12Zm-8.74,2.5A5.76,5.76,0,0,1,9.5,8.74a5.66,5.66,0,0,1,.16-1.31A.49.49,0,0,1,10,7.07a5.36,5.36,0,0,1,1.8-.31,5.47,5.47,0,0,1,5.46,5.46,5.36,5.36,0,0,1-.31,1.8.49.49,0,0,1-.35.32A5.53,5.53,0,0,1,15.26,14.5Z" style="fill: currentColor"/></svg>
+                                    オート
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </header>
+            <div class="container-fluid">
+
+                <!-- Title -->
+                <figure class="text-center">
+                    <blockquote class="blockquote">
+                        <h1 class="h2">テキスト暗号化</h1>
+                    </blockquote>
+                    <figcaption class="blockquote-footer">
+                        暗号化を利用して、読まれてもわからないように変更。また読めるように変更します。
+                    </figcaption>
+                </figure>
+                                
+                <div class="row justify-content-center">
+                    <div class="col-lg-10 col-xl-9 col-xxl-7 pt-3">
+                        <!-- Card -->
+                        <div class="card border-0 py-6 px-md-6">
+                            <div class="card-body">
+                                <!-- <h2 class="text-center mb-0">チェックしてツイートする</h2>
+                                <p class="text-secondary text-center">チェックリストに目を通して、問題なければツイートしましょう</p> -->
+
+                                <div class="row mb-6">
+                                    <div class="col-xl-6 mb-5">
+                                        <div class="d-flex mb-0">
+                                            <textarea type="text" class="form-control border-light-green" id="input" style="height:200px; font-size: 12px;"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 mb-5">
+                                        <div class="d-flex mb-0">
+                                            <textarea type="text" class="form-control border-dark" id="output" style="height:200px; font-size: 12px;" readonly></textarea>
+                                            <button id="copyBtn" class="clipboard" data-clipboard-target="#output" hidden="hidden"></button>
+                                        </div>
+                                    </div>
+                                </div> <!-- / .row -->
+                            </div>
+
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-between">
+                                    <button id="decordBtn" type="button" class="btn btn-secondary">読める文字に戻す</button>
+                                    <button id="encryptBtn" type="button" class="btn btn-success">暗号化する</button>
+                                    <!-- Button -->
+                                    <button id="copyTweetBtn" type="button" class="btn btn-primary"　data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">コピーする</button>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            //input値の取得
+                            function getInputVal(){
+                                return document.getElementById("input").value;
+                            }
+
+                            function getOutputMap(isEncrypt){
+                                const encryptList = ["C?l","%A7","?x8","Lur","YGf","&QA","2x8","$b@","H?A","H4i","BK@","sBh","ISk","u-*","V#.",".+S","thP","#yX","ddN","Rr!","/tM","DfI","NeY","Uvr","jNc","!2b","4Fi","r.T","b/d","SPQ","trj","_q@","Vfb",".8Y","x1/","E8D","lwP","HK*","m0f","v%g","C6r","Jxa","F8O","4JG","sp8","es&","5u6","Wgm","rYr","jpm","EoJ","T1B","Hp*","m$5","5IG","Ul5","dWL","tfN","hgV","lau","k-V","Tdc","m6&","%$w","$TE","o+y","bXM","k4f","j*k","RxX","QzD","8c6","Kd$","86*","2IL","vfr","CSp","BPA","b$r","T--","KBO","r%P","x94","Uck","y_2","H_N","RDB","SNR","-i_","YEx","fqN","q$/","ByM","8jV","HgC","AIe","#$i","&lN","_cE","VKg","fmi","SnG","WxU","sQg","UK0","PrY","U0.","MoQ","riw","S12","Sr&","3tP","i&D","DEK","fyW","tdi","Of$","hDF","4Na","Cg*","AS?","01$","Hn_","35U","gcm","v_P","B7A","2c0","nWj","2da","*?9","ddM","e1k","KWI","q/L",".IP","d6s","TlV","Igw","J1B","pQZ","rJt","sCm","f8W","8eG","./.","lfI","kW9","DOd","Hen","X2D","t!&","uZC","D9@","DJr","jhg","#mh","7lx","GTi","-W#","r2*","/iY","ixH","ZL#","?AS","7.o","lCQ","S@.","7*q",".+p","0v-","d$N","?LA","Z0j","Pa9","ls#","PLS","?zX",".7F","Tie","jmb","pDx","g#w","ymY","qD_","x*I","bW3","p$4","T/&","1FQ","JDb","dQv","$91","hrv","rrN","slJ","vsI","v_p","j9_","IKa","hJ/","lli","&ny","cZ.","G6J","rvI","y$r","5&%","L4o","7sm","u1B","iH?","m1o","hHw","Bhj","yZT","v0E","-PG","7@%","EO#","dOF","wJx","_#L","btq","pHK","n_i","2D2","8-_","CcW","pC1","DhV","ng&","Dtc","c4m","IZr","Dp/","oWB","K3?","FC$","Ql1","md2","J/D","L@E","p7b","/Bh","JFb","&/e","Y7T","iCz","sN6","9R#","!jp",".7#","VJD","@?h",".o#","o0?","?0p","HNp","_bT","ws_","d2h","Q3.","Vco","zq_","Q5G","00V","s#N","!RR","Y/N","4HV","I.R","Qfq","FsU","m/V","B/a","VrC","bew","AaU","Z&G","7_5","mag","O3F","nrZ","frm","5oe","_H&","IK6","B7J","h!Z","b8T","q0t","6&p","l7x","pOE","zr/","Bcl","FjG","Tok","71#","9g1","DoF","O9_","i52","zG3","R9X","Wn!","5xM","nkT","$Zq","g%k","TXC","T2*","XkN","aMg","f.c","$B.","ckk","C4*","a6n","N.r","z6S","A*h","0h2","5!@","vlV","IF0","7vC","U0s","/+C","jcR","QRQ","Mxi","6nS","W2q","_If","MfV","v_5","w+k","hiM","VKg","1/Y","31L","%L6","ZaW","k1r","y*F","BCH","2yt","rRy","Un7","CGb","63_","aXj","8TI","ZiP","fWY","NCC","mKC","cdn","-6z","RKl","1$R","@.A","WtW","Ju2","3a7","Dff","yVF","Rmc","R%b","eA.","4ep","Hu!","m2k","&_y","I.#","C/v","L1l","_e*","f@t","GB&","RkX","?uN","@5@","80P","7@n","D2X","X_j","Wlb","ToF","%k!","bly","_np","95-","1xI","3%d","plg","$x8","yRi","rgh","SMo","%Bw","gqo","klb","8yn","5th","hAD","wzt","##4","EUU","0#-","0u1","1-e","Mh7","0KH","__*","vMH","t7r","?JY","B.d","*!Y","gPN","XsO","3y0","/pG","@w0","d0B","ide","gsk","qgr","NB_","Ovs","C!#","OVy","*sD","#c-","3a3","S#?","GfL","Y+A","vxj","zxT","eIL","jv!","DvE","kBH","zKk","5z3","0UE","MdG","@CU","xO9","MKX","&Oi","gr+","geT","gqk","kL0","pD5","s*9","3wJ","LwO","txf","X5Z","$+f",".#9","uqK","hpP","Nar","z&F","vde","!Zl","Hdk","f4!","@wU","ra/","kIc","BK1","@Hs","b#h","TwR","_04","UF9","X?p",".D?","hUc","/O4","9pJ","qK#","hKM","&J!","cmI","R@H","dul","TTe","qwc","4Gw","TKo","Mdp","YbQ","RCl","Vw3","u6c","*&t","?wU","AWF","#z6","cVC","M/L","nUc","%KC","R8@","vto","Dhg","I#3","e#y","XTT","qkT","g5e","k?1","h$u","EUM","1rT",".Cj","ZG?","PsT","@5v","D3f","?1M","2gV","qaK","syb","vbw","oA#","O%5","JTU",".ry","N6u","Ay2","8.@","20D","eE_","rXI","QB_","U4r","dy0","Wzc","BDV","F@x","YW4","Ui0","ui1","#9d","Qaw","Jvw","Z$p","p?b","*ym","8$%","2MS","vJ$","5Vg","E/r","1df","Zce","5zz","9n1","O$j","N*m","HQ2","3dV","l_6","V-h","&Sh","C$&","Eel","hky","YGo","A-i","S1Y","csC","blx","Etf","fT2","vTk","*Hd","d45","l$f","ywm","PU!","Lo9","pV6","30E","_SM","uJj","*j#","3S#","B?E","wh6","7Tr","e3V","VyL","PeQ","Qy6","IU6","Qn&","NC3","w+b","d.$","f64","HC&","ytB","2_q","GLx","FVY","2*J","JN.","/UZ","Eb@","*OH","?jn","&VB","7cB","!zs","kqh","evo","jn9","RcZ","M_1","&u&","gH2","!Qs","rx0","bLV","5F?","VNt","FLb","qoV","ySh","m?i","/sU","53z","@ZN","unN","lgT","o9w","PSx","_$v","QAh","l.d","G6M","vLy","BS&","whU","bKO","KPu","u&A","hA6","y%z","0%X","zzc","Tt0","cwG","P*&","-hz","s?2","7Ik","jZu","f86","9TP","yg1","B*L","GU!","!8p","bQ+","6Iy","OI-","a2G","%*X","vGt","3?E","$yt","7Pe","wAX","NnD","ke-","W@7","h%F","two","ks$","/K%","1w.","pns","CTM","Y$y","!iK","M?c","W&f","_bz","h*i","ATi","NTq","Cky","j/#","b+o","L2V","QhX","5AZ","LEp","ARv","@xt","tbk","Jj9","rBQ","JFO","HJ?","W_N","$I&","E#?",".Qf","3R&","Z2T","0u$","QS9","#q3","52m","3b#","kS!","pC#","#&f","M@S","a_5","/rk","krp","PB1","zbP","cpQ","fj/","HBK","Tn3","W8Q","N?q","if?","cn$","pxa","MhQ","n#H","V2r","R#*","9Ho",".EK","v2d","l1N","*Uo","Vua","mvo","_gV","!xi","Olp","n?T","hxE","jxE","eSF","DMK","z!d","3Zs","o%k","2dD",".Na","KaO","1wi","U1b","D25","EeJ","nAX","NjJ","Fei","Gmb","$3X","vuu","InW","wp$","SVq","hVE","MCq","mZO","Q&Q","OQG","&Nk","@m#","gop","F/y","TaA","Rxu","G9l","Sdo","bc6","@OX","#1M","rbF","f7J","r+J","x1k","U43","LEu","yCO",".aZ","wkO","72o","4Tn","ZtV","cc2","6BV","asz","k9Q","/TJ","0YM","8Qm","zZQ","YO!","Vxi","?$j","EaQ","keD","vhU","xZD","8/L","fNL","%w-","bbj","s5i","I@F",".f/","PKp","N%.","Jdu","*hK","Tya","NM.","&i_","GOP","/LH","Z2J","GDG","92l","a6I","K8L","Vsf","kbq","GYH","cQw","JC?","r-K","?5+","ApG","IqY","vri","I5W","tQx","@Mq","i+M","q#f","FbY","Z4h","lgv","i7!","XJ4","?lj","82/","cCC","Bj6","?3O","WkT","1F@","?_/","7?J","iEO","hqW","S+c","3_M","QbA","18W","rrj","ILY","3X0","D.n","1HA","gF.","!W!","Z6*","P+i","PF/","uK@","OTg","FeZ","lq2","M2Z","D$o","yrt","amT","78I","o3e","JpR","*4$","wrz","Qx/","dk1","!mE","/5a","NMk","1H_","J$X","L!2","_Ai","#_Q","*$_","KB#","kYI","@Jq","u.7","Q/*","z?%","lnj","DRj","QF7","bbP","7aN","nR1","Frk","Zdl","qNA","UOB","14u","D@J","Lk3","D4-","p-9","*6Y","P5H","jWj","laY","?QR","RDt","kmD","2hK","l2Z","/N!","A7Z","T*!","8c*","Yul","UNO","Ac2","XVq","u!*","wvk",".bS","tw6","qNX","M*d","kKz","/gn","oqi","?6$","x-%","Vpg","b6k","heR","$qS","ZK/","S?m","$%m","WUd","I+C","&DV","$4L","95o","*HX","2Ex","-fw","JeL","wwz","%Q&","J1L","PLe","DRn","Y&2","fe-","Rxh","b#y","8UE","teq","7pe","dG+","Ivs","wbd","Lsp","@kM","Zik","eY8","#!O","cSx","DD3","Hmf","IBd",".Ib","6&m","YUH","/I+","Lp_","$zC","wC.","AlK","t&.","e+k","kn4","ZDw","4uQ","$zy","B7g","gvl","4F6","axI","Tju","/a7","p.W","nhE","UVQ","/v?","7?V","TW+","KpZ","i86","pDv","5QC","Lyq","V+.","Na9","uh?","lDc","HuL","8uZ","xAJ","TO7","7f?","ztr","#W6","94+","W5w","?&3","aI+","ij?","G6b","TUI","-x0","%oh","U4k","!.8","Bdi","N1B","h??","wOl","NZc","zMA","rQ@","XPL","jQY","0.4","DSE","r0@","?!W","hgS","qGK","&Gs","NM7","G8J","yi/","Z&0","AW7","4df","oR!","J_s","o*7","RBl","dmW","hUH","d9o","ZIR","MfZ","dDX","Md2","qc-","7Xy","T9/","cm/","gP%","bFP","cU#","TNY","y%R","wP.","aMk","kL#","z$?","4TA","qzo","C5g","tFs","VKf","vIE","H7N","k+#","TK2","y2k","0jG","ITy","iJT","NwL","0.5","ZdD","_I3","V&l","RbH","z!B","L.q","TrH","&Xz","eSx","@Jx","pgG","z?-","C%i","g&+","3nW","L5j","z1$","MA9","/0S","?@k",".W+","Ht_","av@","OnB","@Gi","Tka","?9h","sML","Gjy","BZY","ikN","YgZ","dQ0","bPw","JBa","C@a","q5U","Zd*","TkR","lf6","J3w","9eT","7uW","RS$","lJm","#*j","db?","L#@","zEM","@Af","jAw","i&.","aWq","Bp+","D$b","T-1","?oV","7SR","!x%","-QM","d+5","#ej","@J$","2%F","8sp","VAY","x4i","vMh","yL7","D##","Ws*","#l@","ed/","c-1","L%h","T!K","H_Z","576","soA","G7D","l3D","q*0","vJ9","Wpo","*FJ","#l4","wE3","t20","3#J","vn4","zYG","N!C","p@j","@iY","@AY","A?B","Ud&","_3n","9wS","tAZ","02w","XxB","Y$2","Jrz","43I","%Z*","$.g","Y+M","*OP","M3V","x8k","7Ta","!JL","U@P","?8%","ksT","oXS","kx0","j+o","Vok","#aD","zVE","TfK","Zww","FS$","0Jq","u-C","w3@","KOA","W@F","hw/","Nk?","bN5","QxS","LGf","Ba0","L2a","qMX","?fA","r4q","$ij","wCc","Ygg","#EU","Q9!","Yg%","-b@","0_L","5?I","9VV","bTC","N&V","D01","NnM","%/?","Sc$","3A9","JME","ZL5","s-P","a?s","8u!","w%d","vXa","rKD","zpN","3P_","loQ","ncr","@ac","vL8","y3F","cf$","I6Q","ikr","aSE","4DW","7Ti","oBN","A3c","yZs","ZA_","-fA","xs/","xz3","bwN","q67","yS2","ATZ","rwe","pEb","oeN","NDk","6Bu","ouT","gYX","J0t","kid","roz","!?y","eG$","qxY","!ko","NUT","f#D","3_k","t?d","vr4","TE0","awD","vW6","4ub","/Rc","MdV","V.Z","5.-","WOa","BaO","f3z","wWv","ax+","6%Q","TIS","oen","$2N","vU1","e1A","R+1","l05","5&K","lZN","#fj","L_Z","g$e","w#/","yPy","Np1","?ha","X+m","N@i","VxK","bms","CH%","zhR","2I$","ZnS","@sz","xI?","qcc","G.I","Vt?","5ED","2S8","*ox","J+/","YFm","_EI","1/w","/?n","KAy","g8l","$t+","?WF","_RA",".b.","Je+","9d!","YQf","&-?","%A8","A9G","hl*","L5&","w?j","kUM",".W1","Fn#","$Ln","q6D","XYo","3Jh","kvU","4&u","L.q","PFg","98K","*K3","/Xw","udN","11o","/F@","!ZQ","&Rw","!Dm","wCG","ujx","6Io","rnK","dZN","gD*","hbk","VBu","!v&","AvL","Lo7","m%u","uT-","Ss/","hfC","1#X","lvV","F0Z","H2r","Z/I","0kk",".FO","O19","$fs","QwA","M!2","9MQ","Jd!","Yra","wq7","&!k","nqt","@EQ","$k/","Vom","d!S","b1b","GHp","IyU","pfG","DDI","G.F","_Dd","mom","*ba","r?+","s5J","V.$","B3!","pI6","41Y",".uj","*Be","RiY","ItP","_Es","NHL","*Js","2OX","w17","TMU","*H9","qVa","D#k","X/y","2&v","kQl","lS%","W$w","h/u","64M","x_l","do9","t?5","plX","u%+","rWl","4z_","K-$","NWE","bqH","P4p","L@O","3w8","HgV","VEI","$E6","wJf","Hrq","cvH","b*H","-b@","yq/","CA1","nC@","XM/","3tG","DzG","iMT","mq4","mPt","BDo","%Ah","sw0","9*$","bWZ","rsC","Zyl","pbx","7if","YQ*","$!w","#W.","@ID","_wX","fvB","hv&","jP_","UzN","bjD","uzU","&TN","%Y3","U**","LAw","$7c","U2f","WRu","EUE","G%M","?Si","Hx@","qKh",".D8","zs*","A..","C_R","RpP","J3f","WdO","!Q#","ArY",".-A","sE9","?Fw","m4T","ijv","5D%","Hf#","yJy","D3Z","Ad!","l!d","M3@","#fa","aMs","Zt+","tqe","CA@","vvd","pIh","KfG","8C_","KDC","ZX_","87w","7Gi","PRF","rMq","ALz","7HO","S%C","FCf","GJY","owu","9r9","o%Q","cbB","Edm","zpL","#2L","tv$","dqp","%n3","arG","&Qx","9x0","LYt","a1&","h.p","618","j1w","Nzd","hv8","*AI","d2g","9+V","Cod","q*g","e&K","e/.","A.W","VN_","-yV","9Jo","qXP","OfU","9b*","jbC","8a-","LFw","728","GqZ","elu","A+H","He3","FlU","o9F","s4J","39G","sg0","4M-","RLy","@nl","P.$","!R#","/$/","9Ui","Huq","U_3","PhX","TDP","n?C","Axh","Plu","0Bw","ouo","$vr","!eI","nXn","o5H","onU","8Bh","VFa","ZVs","J/T","g.6","5Rs","d8k","tOs","dCT","2#D","R8b","K$L","QEw","Ioy","kGN","ZLg","Y$@","ewK","Y%9","of7","7KM","Ao%","cdx","@X2","Z%j","vDp","skV","6Ec","I5Z","#9m","H#f","s/Z","amo","qV&","OG3","1b?","T*z","cl*",".Li","6jz","amq","Wh7","!DB","/59","CSQ","%Si","bGc","LWz","Cqs","zJr","R18","WNB","fL&","VZk","lHZ","z!R","JEX","M2_","a8e","Vu6","uhR","h9H","p/P","0-2","qlO","I$Q","cbE","ngj","1sr","6DK","Zka","N-t","2tc","&Z6","Hnq","X7z","a_q","15@","e/g","QyB","jCF","OzD","HoM","l$4","G6P","rCC","YuW","Kmk","sgP","No%","lg-","FNE","evr","lZ6","W32","Uuc","@k.","blE","-c8","w&K","2u.","Uth","X_2","LTl","i/8","ff$","vzN","hhP","/P6","JcO","&X.","GWU","f2.","pwl","y9I","mur","GcC","ba&","sHn","_w9","XIT","Lji","YlE","8W-","5l9","LcQ","D_M","x7H","al3","RCI","WdU","g!Q","9wR","Wci","U&r","UcT","Hgd","zKf","cWX","Sal","r_+","jh1","@en","$$l","OvJ","LbX","Yzl","hBY","dX.","GNs","bLG","&Ft","G7r","&aa","vf4","Rde","sw2","sP8","2MJ","VP&","8&S","Ee_","BA9","mtB","#sg","-kr","y%*","-OA","kYU","7Pj","i$_","1iM","yL?","#6$","B9+","V9V","-Rh","udK","EGC","!Bg","?RT","#+0","_Hu","!V#","-Lg","Lmj","NTZ","Lo6","hdr","G?P","XM8","zF4","ihn","#&J","&S6","tn3","3nc","xa4","b59","gx5","1!l","l3y","#P0","/vP","_CJ","TPb","gMr","S6g","FwH","Khc","z@g","ld0","RF_","66r","BY@","%hQ","_k/","*7S","dVp","oOS","r#l","pM&","*OW","zHF","ozH","8.T","o35","QM0","OFh","7ai","RaD","5ZO","O0z","PFj","0sr","GMH","W1U","GiT","y-+","uhi","b0V","s%f","t-Z","1s6","z1t","_wB","mIG","a#2","T3M","gB4","5pJ","eeN","0SI","*9C","3-_","9Sq","lrY","KoQ","U--","hhT","LNG","&CA","jl@","ecp","7fI","V0#","Gj@","6bP","xeV","bP+","cWq","93O","9mo","8dC","k10","X7H","YsZ","#/@","CBB","?P@","8Qj","M67","Cau","gfy","1!d","WJH","15u","4!z","&X*","n@D","a4n","Dym","2US","a$s","520","O5n","gKY","Zi2","3-S","&7A","TWk","Pdv","!V3","9g+","fXM","V*j","wa*","dyb","t#O","Aa6","xkG","1T4","$r!","*Y$","5&h","AmT","h0a","Fs@","kzr","%vM","s$/","sYh","JkH","aOl","mKX","9TH","-Fw","IH2","aSr","1AD","eE_","I_y","wZz","RaX","9Bu","_L8","*CW","w5%","jst","XHf","CvK","n2U","uX+","IJ-","NF9","_Zg","hC#","XR7","jvr","CXH","XeE","f*$","g*.","T$c","H5q","i+O","Uzc","KOR","$Wm","y*c","owH","pQ8","Y4+","w_o","6hS","?NY","m20","qSV","pwA","/kR","_j8","Acl","KgA","uHa","gMH","RKh","9OA","bYr","y-t","$vM","KB#","uQ#","Kq7","89T","CtJ","Kq-","uB!","xU_",".KA","EvP","bSB","0&j","DKs","Dqf","q1t","wWw","fPX","VWK","m%M","v+V","m8-","fIH","&Cs","&+G","pOV","#NC","5Gu","3z*","3IX","qDJ","Ehx","x6+","73+","x!F","_LI","a-V","wFV","g.a","l3x","uHK","kVm","MQc","tj+","sxs","kfJ","?gL","hYJ","gyB","yJ_","n-T","3rr","DO&","9LC","P#W","32t","2CW","ZKM","u--","tNq","7O!","d1r","BgN","S*r","4Wr","F9$","WZZ","8-S","M/o","/8Z","DV&","eE_","m2U","ics","UC*","_iB","&K8","CSy","dOQ","Xl?","dej","xoh","I8_","$s#","i!D","Q@D","z7M","PzZ","1Kt","!A*","@GT","#o?","b+Z","6h0","-ne","XXn","q.p","p$5","GmB","V*n","@&N","q0O","tOD","jEJ","FEo","/C+","Epk","zyR","wmt","Oo0","R!4","uLV","-Ne","0mT","OAc","oEQ","F6i","XX4","ifP","V4p","eth","DT/","F52","a24","2U&","N*-","QZM","@R8","L/a","9LH","nbV","KSO","OZD","57u","X-4","oF0","u4I","lR$","mQl","Nji","2Uo","M__","Tzv","m/#","XlA","Us?","AuL","uK2","QOT","lWB","G!l","!Mw","ZpQ","qWS","lOg","MMM","&Do","YG3","tUH","FYH","Ub-","m_g","/pJ","0a0","M6s","A2h","iv9","zsO","#V+","kRq","0tD","aJ$","3GK","e8&","y7B","iLY","!ym","NT4","pP5","PbB","0KD","UG3","M&Z","I.5","Fvi","A2c","vec","B6?","317","S0C","yoc","0+*","uA/","*i3","Zi!","$*V","r$w","Z&l","E7v","E+6",".?N","Itf","xi-","Wq/","JUf","P7t","@VD","ZTO","kpZ","uvC","y-V","N%N","p#Y","q!/","f-h","yKc","yG8","@*n","P*i","R0W","fpk","hY#","FzR","$Y-","iTm","RpJ",".gT","3I8","o1x","-%*","-L&","tGw",".+C","&ac","-8a","ThI","@W5","m0k","i$W","BI!","ymo","bX/","a%A","9i+","_9F","n#I","EEX","-?_","k1J","UtX","$Ch","6vX","cDD","mtZ","G0l","1td","Nqd","yoa","!MG","a8J","87s","3!?","wY4","3mX","?7D","J42","V4Z","SIl","w@t","#CM","eQU","Xmu","jc3","sDO","ZN4","o#7","/JN","/XC","P$+","N68","quC","5LM","d.R","0FS","k8p","HTb","t6&","RN%","gp7","4@/","G1J","6sG","?+2","tO7","xcK","S62","eUt","3!7","77f","#Ta","nT3","Hu8","Cyw",".Hk","ztW","CAl","uVy","RVJ","s3d","rm?","rDw","q6Y","T+X","tJM","HlN","duZ","VYW","6j$","Y2M","PTS","Dg!","Q4F","2k$","evt","oWg","CV2","X4v","M6G","fj@","P#9","LaM","-vB","47p","gRX","E!W","Q?.","K*S","E7o","Xbq","12m","hWt","*KC","TfY","ih@","&eh","Kmt","E2Y","D6p","cS-","3g9","BZe","rHh","fTK","*v0","zrQ","YCp","Ma?","@7g","GfD","w9X","&@O","*9P","#_4","3m?","n/7","3$o","JCL","XD5","KT?","E&N","Ds$","*$-","H+U","imU","8.9","mdA","wdR","m#u","vqy","54f","T0P","QI_","*OL","4-J","tup","-?L","?57","X7Y","-y#","Vq6","#qP","Uui","LQ9","&*-","iqL","nlN","rxb","Q-c","cEU","Kkf","YGZ","Koy","xm8","D&1","&cw","21S","oMO","Lg%","Y5R","rf@","GY9","oqA","HMh","j!*","t0p","t8e","&sO","Ya6","I34","q$#","a]8","}|;","u5=","rdC","J,<","KeJ","&6W"];
+                                const decordList = ["あ","い","う","え","お","か","き","く","け","こ","さ","し","す","せ","そ","た","ち","つ","て","と","な","に","ぬ","ね","の","は","ひ","ふ","へ","ほ","ま","み","む","め","も","や","ゆ","よ","ら","り","る","れ","ろ","わ","ゐ","う","ゑ","を","ん","ア","イ","ウ","エ","オ","カ","キ","ク","ケ","コ","サ","シ","ス","セ","ソ","タ","チ","ツ","テ","ト","ナ","ニ","ヌ","ネ","ノ","ハ","ヒ","フ","ヘ","ホ","マ","ミ","ム","メ","モ","ヤ","ユ","ヨ","ラ","リ","ル","レ","ロ","ワ","ヰ","ウ","ヱ","ヲ","ン","ゔ","が","ぎ","ぐ","げ","ご","ざ","じ","ず","ぜ","ぞ","だ","ぢ","づ","で","ど","ば","び","ぶ","べ","ぼ","ヴ","ガ","ギ","グ","ゲ","ゴ","ザ","ジ","ズ","ゼ","ゾ","ダ","ヂ","ヅ","デ","ド","バ","ビ","ブ","ベ","ボ","ヷ","ヸ","ヹ","ヺ","ぱ","ぴ","ぷ","ぺ","ぽ","パ","ピ","プ","ペ","ポ","ぁ","ぃ","ぅ","ぇ","ぉ","っ","ゃ","ゅ","ょ","ゎ","ァ","ィ","ゥ","ェ","ォ","ヵ","ㇰ","ヶ","ㇱ","ㇲ","ッ","ㇳ","ㇴ","ㇵ","ㇶ","ㇷ","ㇸ","ㇹ","ㇺ","ャ","ュ","ョ","ㇻ","ㇼ","ㇽ","ㇾ","ㇿ","ヮ","１","２","３","４","５","６","７","８","９","０","亜","哀","挨","愛","曖","悪","握","圧","扱","宛","嵐","安","案","暗","以","衣","位","囲","医","依","委","威","為","畏","胃","尉","異","移","萎","偉","椅","彙","意","違","維","慰","遺","緯","域","育","一","壱","逸","茨","芋","引","印","因","咽","姻","員","院","淫","陰","飲","隠","韻","右","宇","羽","雨","唄","鬱","畝","浦","運","雲","永","泳","英","映","栄","営","詠","影","鋭","衛","易","疫","益","液","駅","悦","越","謁","閲","円","延","沿","炎","怨","宴","媛","援","園","煙","猿","遠","鉛","塩","演","縁","艶","汚","王","凹","央","応","往","押","旺","欧","殴","桜","翁","奥","横","岡","屋","億","憶","臆","虞","乙","俺","卸","音","恩","温","穏","下","化","火","加","可","仮","何","花","佳","価","果","河","苛","科","架","夏","家","荷","華","菓","貨","渦","過","嫁","暇","禍","靴","寡","歌","箇","稼","課","蚊","牙","瓦","我","画","芽","賀","雅","餓","介","回","灰","会","快","戒","改","怪","拐","悔","海","界","皆","械","絵","開","階","塊","楷","解","潰","壊","懐","諧","貝","外","劾","害","崖","涯","街","慨","蓋","該","概","骸","垣","柿","各","角","拡","革","格","核","殻","郭","覚","較","隔","閣","確","獲","嚇","穫","学","岳","楽","額","顎","掛","潟","括","活","喝","渇","割","葛","滑","褐","轄","且","株","釜","鎌","刈","干","刊","甘","汗","缶","完","肝","官","冠","巻","看","陥","乾","勘","患","貫","寒","喚","堪","換","敢","棺","款","間","閑","勧","寛","幹","感","漢","慣","管","関","歓","監","緩","憾","還","館","環","簡","観","韓","艦","鑑","丸","含","岸","岩","玩","眼","頑","顔","願","企","伎","危","机","気","岐","希","忌","汽","奇","祈","季","紀","軌","既","記","起","飢","鬼","帰","基","寄","規","亀","喜","幾","揮","期","棋","貴","棄","毀","旗","器","畿","輝","機","騎","技","宜","偽","欺","義","疑","儀","戯","擬","犠","議","菊","吉","喫","詰","却","客","脚","逆","虐","九","久","及","弓","丘","旧","休","吸","朽","臼","求","究","泣","急","級","糾","宮","救","球","給","嗅","窮","牛","去","巨","居","拒","拠","挙","虚","許","距","魚","御","漁","凶","共","叫","狂","京","享","供","協","況","峡","挟","狭","恐","恭","胸","脅","強","教","郷","境","橋","矯","鏡","競","響","驚","仰","暁","業","凝","曲","局","極","玉","巾","斤","均","近","金","菌","勤","琴","筋","僅","禁","緊","錦","謹","襟","吟","銀","区","句","苦","駆","具","惧","愚","空","偶","遇","隅","串","屈","掘","窟","熊","繰","君","訓","勲","薫","軍","郡","群","兄","刑","形","系","径","茎","係","型","契","計","恵","啓","掲","渓","経","蛍","敬","景","軽","傾","携","継","詣","慶","憬","稽","憩","警","鶏","芸","迎","鯨","隙","劇","撃","激","桁","欠","穴","血","決","結","傑","潔","月","犬","件","見","券","肩","建","研","県","倹","兼","剣","拳","軒","健","険","圏","堅","検","嫌","献","絹","遣","権","憲","賢","謙","鍵","繭","顕","験","懸","元","幻","玄","言","弦","限","原","現","舷","減","源","厳","己","戸","古","呼","固","股","虎","孤","弧","故","枯","個","庫","湖","雇","誇","鼓","錮","顧","五","互","午","呉","後","娯","悟","碁","語","誤","護","口","工","公","勾","孔","功","巧","広","甲","交","光","向","后","好","江","考","行","坑","孝","抗","攻","更","効","幸","拘","肯","侯","厚","恒","洪","皇","紅","荒","郊","香","候","校","耕","航","貢","降","高","康","控","梗","黄","喉","慌","港","硬","絞","項","溝","鉱","構","綱","酵","稿","興","衡","鋼","講","購","乞","号","合","拷","剛","傲","豪","克","告","谷","刻","国","黒","穀","酷","獄","骨","駒","込","頃","今","困","昆","恨","根","婚","混","痕","紺","魂","墾","懇","左","佐","沙","査","砂","唆","差","詐","鎖","座","挫","才","再","災","妻","采","砕","宰","栽","彩","採","済","祭","斎","細","菜","最","裁","債","催","塞","歳","載","際","埼","在","材","剤","財","罪","崎","作","削","昨","柵","索","策","酢","搾","錯","咲","冊","札","刷","刹","拶","殺","察","撮","擦","雑","皿","三","山","参","桟","蚕","惨","産","傘","散","算","酸","賛","残","斬","暫","士","子","支","止","氏","仕","史","司","四","市","矢","旨","死","糸","至","伺","志","私","使","刺","始","姉","枝","祉","肢","姿","思","指","施","師","恣","紙","脂","視","紫","詞","歯","嗣","試","詩","資","飼","誌","雌","摯","賜","諮","示","字","寺","次","耳","自","似","児","事","侍","治","持","時","滋","慈","辞","磁","餌","璽","鹿","式","識","軸","七","𠮟","-","叱","失","室","疾","執","湿","嫉","漆","質","実","芝","写","社","車","舎","者","射","捨","赦","斜","煮","遮","謝","邪","蛇","尺","借","酌","釈","爵","若","弱","寂","手","主","守","朱","取","狩","首","殊","珠","酒","腫","種","趣","寿","受","呪","授","需","儒","樹","収","囚","州","舟","秀","周","宗","拾","秋","臭","修","袖","終","羞","習","週","就","衆","集","愁","酬","醜","蹴","襲","十","汁","充","住","柔","重","従","渋","銃","獣","縦","叔","祝","宿","淑","粛","縮","塾","熟","出","述","術","俊","春","瞬","旬","巡","盾","准","殉","純","循","順","準","潤","遵","処","初","所","書","庶","暑","署","緒","諸","女","如","助","序","叙","徐","除","小","升","少","召","匠","床","抄","肖","尚","招","承","昇","松","沼","昭","宵","将","消","症","祥","称","笑","唱","商","渉","章","紹","訟","勝","掌","晶","焼","焦","硝","粧","詔","証","象","傷","奨","照","詳","彰","障","憧","衝","賞","償","礁","鐘","上","丈","冗","条","状","乗","城","浄","剰","常","情","場","畳","蒸","縄","壌","嬢","錠","譲","醸","色","拭","食","植","殖","飾","触","嘱","織","職","辱","尻","心","申","伸","臣","芯","身","辛","侵","信","津","神","唇","娠","振","浸","真","針","深","紳","進","森","診","寝","慎","新","審","震","薪","親","人","刃","仁","尽","迅","甚","陣","尋","腎","須","図","水","吹","垂","炊","帥","粋","衰","推","酔","遂","睡","穂","随","髄","枢","崇","数","据","杉","裾","寸","瀬","是","井","世","正","生","成","西","声","制","姓","征","性","青","斉","政","星","牲","省","凄","逝","清","盛","婿","晴","勢","聖","誠","精","製","誓","静","請","整","醒","税","夕","斥","石","赤","昔","析","席","脊","隻","惜","戚","責","跡","積","績","籍","切","折","拙","窃","接","設","雪","摂","節","説","舌","絶","千","川","仙","占","先","宣","専","泉","浅","洗","染","扇","栓","旋","船","戦","煎","羨","腺","詮","践","箋","銭","潜","線","遷","選","薦","繊","鮮","全","前","善","然","禅","漸","膳","繕","狙","阻","祖","租","素","措","粗","組","疎","訴","塑","遡","礎","双","壮","早","争","走","奏","相","荘","草","送","倉","捜","挿","桑","巣","掃","曹","曽","爽","窓","創","喪","痩","葬","装","僧","想","層","総","遭","槽","踪","操","燥","霜","騒","藻","造","像","増","憎","蔵","贈","臓","即","束","足","促","則","息","捉","速","側","測","俗","族","属","賊","続","卒","率","存","村","孫","尊","損","遜","他","多","汰","打","妥","唾","堕","惰","駄","太","対","体","耐","待","怠","胎","退","帯","泰","堆","袋","逮","替","貸","隊","滞","態","戴","大","代","台","第","題","滝","宅","択","沢","卓","拓","託","濯","諾","濁","但","達","脱","奪","棚","誰","丹","旦","担","単","炭","胆","探","淡","短","嘆","端","綻","誕","鍛","団","男","段","断","弾","暖","談","壇","地","池","知","値","恥","致","遅","痴","稚","置","緻","竹","畜","逐","蓄","築","秩","窒","茶","着","嫡","中","仲","虫","沖","宙","忠","抽","注","昼","柱","衷","酎","鋳","駐","著","貯","丁","弔","庁","兆","町","長","挑","帳","張","彫","眺","釣","頂","鳥","朝","貼","超","腸","跳","徴","嘲","潮","澄","調","聴","懲","直","勅","捗","沈","珍","朕","陳","賃","鎮","追","椎","墜","通","痛","塚","漬","坪","爪","鶴","低","呈","廷","弟","定","底","抵","邸","亭","貞","帝","訂","庭","逓","停","偵","堤","提","程","艇","締","諦","泥","的","笛","摘","滴","適","敵","溺","迭","哲","鉄","徹","撤","天","典","店","点","展","添","転","塡","田","伝","殿","電","斗","吐","妬","徒","途","都","渡","塗","賭","土","奴","努","度","怒","刀","冬","灯","当","投","豆","東","到","逃","倒","凍","唐","島","桃","討","透","党","悼","盗","陶","塔","搭","棟","湯","痘","登","答","等","筒","統","稲","踏","糖","頭","謄","藤","闘","騰","同","洞","胴","動","堂","童","道","働","銅","導","瞳","峠","匿","特","得","督","徳","篤","毒","独","読","栃","凸","突","届","屯","豚","頓","貪","鈍","曇","丼","那","奈","内","梨","謎","鍋","南","軟","難","二","尼","弐","匂","肉","虹","日","入","乳","尿","任","妊","忍","認","寧","熱","年","念","捻","粘","燃","悩","納","能","脳","農","濃","把","波","派","破","覇","馬","婆","罵","拝","杯","背","肺","俳","配","排","敗","廃","輩","売","倍","梅","培","陪","媒","買","賠","白","伯","拍","泊","迫","剝","舶","博","薄","麦","漠","縛","爆","箱","箸","畑","肌","八","鉢","発","髪","伐","抜","罰","閥","反","半","氾","犯","帆","汎","伴","判","坂","阪","板","版","班","畔","般","販","斑","飯","搬","煩","頒","範","繁","藩","晩","番","蛮","盤","比","皮","妃","否","批","彼","披","肥","非","卑","飛","疲","秘","被","悲","扉","費","碑","罷","避","尾","眉","美","備","微","鼻","膝","肘","匹","必","泌","筆","姫","百","氷","表","俵","票","評","漂","標","苗","秒","病","描","猫","品","浜","貧","賓","頻","敏","瓶","不","夫","父","付","布","扶","府","怖","阜","附","訃","負","赴","浮","婦","符","富","普","腐","敷","膚","賦","譜","侮","武","部","舞","封","風","伏","服","副","幅","復","福","腹","複","覆","払","沸","仏","物","粉","紛","雰","噴","墳","憤","奮","分","文","聞","丙","平","兵","併","並","柄","陛","閉","塀","幣","弊","蔽","餅","米","壁","璧","癖","別","蔑","片","辺","返","変","偏","遍","編","弁","便","勉","歩","保","哺","捕","補","舗","母","募","墓","慕","暮","簿","方","包","芳","邦","奉","宝","抱","放","法","泡","胞","俸","倣","峰","砲","崩","訪","報","蜂","豊","飽","褒","縫","亡","乏","忙","坊","妨","忘","防","房","肪","某","冒","剖","紡","望","傍","帽","棒","貿","貌","暴","膨","謀","頰","北","木","朴","牧","睦","僕","墨","撲","没","勃","堀","本","奔","翻","凡","盆","麻","摩","磨","魔","毎","妹","枚","昧","埋","幕","膜","枕","又","末","抹","万","満","慢","漫","未","味","魅","岬","密","蜜","脈","妙","民","眠","矛","務","無","夢","霧","娘","名","命","明","迷","冥","盟","銘","鳴","滅","免","面","綿","麺","茂","模","毛","妄","盲","耗","猛","網","目","黙","門","紋","問","冶","夜","野","弥","厄","役","約","訳","薬","躍","闇","由","油","喩","愉","諭","輸","癒","唯","友","有","勇","幽","悠","郵","湧","猶","裕","遊","雄","誘","憂","融","優","与","予","余","誉","預","幼","用","羊","妖","洋","要","容","庸","揚","揺","葉","陽","溶","腰","様","瘍","踊","窯","養","擁","謡","曜","抑","沃","浴","欲","翌","翼","拉","裸","羅","来","雷","頼","絡","落","酪","辣","乱","卵","覧","濫","藍","欄","吏","利","里","理","痢","裏","履","璃","離","陸","立","律","慄","略","柳","流","留","竜","粒","隆","硫","侶","旅","虜","慮","了","両","良","料","涼","猟","陵","量","僚","領","寮","療","瞭","糧","力","緑","林","厘","倫","輪","隣","臨","瑠","涙","累","塁","類","令","礼","冷","励","戻","例","鈴","零","霊","隷","齢","麗","暦","歴","列","劣","烈","裂","恋","連","廉","練","錬","呂","炉","賂","路","露","老","労","弄","郎","朗","浪","廊","楼","漏","籠","六","録","麓","論","和","話","賄","脇","惑","枠","湾","腕","ａ","ｂ","ｃ","ｄ","ｅ","ｆ","ｇ","ｈ","ｉ","ｊ","ｋ","ｌ","ｍ","ｎ","ｏ","ｐ","ｑ","ｒ","ｓ","ｔ","ｕ","ｖ","ｗ","ｘ","ｙ","ｚ","Ａ","Ｂ","Ｃ","Ｄ","Ｅ","Ｆ","Ｇ","Ｈ","Ｉ","Ｊ","Ｋ","Ｌ","Ｍ","Ｎ","Ｏ","Ｐ","Ｑ","Ｒ","Ｓ","Ｔ","Ｕ","Ｖ","Ｗ","Ｘ","Ｙ","Ｚ","0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","゛","゜","。","、","ー","－","―","～"]; 
+
+                                const map = new Map();
+                                if(isEncrypt){
+                                    // 暗号化ボタン押下時
+                                    for (let i = 0; i < decordList.length; i++) {
+                                        map.set(decordList[i], encryptList[i]);
+                                    }
+                                }else{
+                                    for (let i = 0; i < decordList.length; i++) {
+                                        map.set(encryptList[i], decordList[i]);
+                                    }
+                                }
+                                return map;
+                            }
+
+                            function outPut(map, inputList){
+                                let outPutVal = "";
+                                inputList.forEach((input) => 
+                                    map.has(input) ? outPutVal = outPutVal + map.get(input) : outPutVal = outPutVal + input
+                                );
+                                document.getElementById("output").value = outPutVal;
+                            }
+
+                            //input値を暗号化
+                            const encryptBtn = document.getElementById("encryptBtn");
+                            encryptBtn.addEventListener("click", function(e){
+                                const map = getOutputMap(true);
+                                const input = getInputVal();
+                                let inputList = input.match(/.{1}/g);
+                                outPut(map, inputList);
+                            });
+
+                            //input値を読める形にする
+                            const decordBtn = document.getElementById("decordBtn");
+                            decordBtn.addEventListener("click", function(e){
+                                const map = getOutputMap(false);
+                                const input = getInputVal();
+                                let inputList = input.match(/.{3}/g);
+                                outPut(map, inputList);
+                            });
+
+                            //コピーしてツイートするボタン(Trigger)
+                            var copyTweetBtn = document.getElementById('copyTweetBtn');
+                            //コピーボタン(hidden)
+                            var copyBtn = document.getElementById('copyBtn');
+                            copyTweetBtn.addEventListener("click", function(e) {
+                                copyBtn.click();
+                                alert("コピーしました！");
+                            });
+                        </script>
+                    </div>
+                </div> <!-- / .row -->
+
+            <!-- Footer -->
+            <footer class="mt-auto">
+                <div class="container-fluid mt-4 mb-6 text-muted">
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            © PalText
+                        </div>
+            
+                        <div class="col-auto">
+                            製作者 : <a href="https://twitter.com/hey9woz">Hey</a>
+                        </div>
+                    </div> <!-- / .row -->
+                </div>
+            </footer>
+            
+        </main> <!-- / main -->
+        
+        <!-- Theme JS -->
+        <script src="./assets/js/theme.bundle.js"></script>
+
+        <!-- Load React -->
+        <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+        <!-- Load our React component. -->
+        <script type="text/babel" src="/component/Navigation.js"></script>
+
+    </body>
+</html>
