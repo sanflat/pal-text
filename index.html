@@ -4,10 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta content="Webinning" name="author" />
-        
-            <!-- Theme CSS -->
-            <link rel="stylesheet" href="./assets/css/theme.bundle.css" id="stylesheetLTR" />        
 
+        <!-- Theme CSS -->
+        <link rel="stylesheet" href="./assets/css/theme.bundle.css" id="stylesheetLTR" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -180,13 +179,7 @@
                 <div class="collapse navbar-collapse" id="sidenavCollapse">
         
                     <!-- Navigation -->
-                    <ul class="navbar-nav mb-lg-7">
-                        <li class="nav-item">
-                            <a class="nav-link " href="tweet-template.html">
-                                <span>ツイートテンプレート</span>
-                            </a>
-                        </li>
-                    </ul>
+                    <div id="navigation"></div>
                     <!-- End of Navigation -->
 
                 </div>
@@ -306,6 +299,13 @@
         </main> <!-- / main -->
         
         <!-- Theme JS -->
-        <script src="./assets/js/theme.bundle.js"></script>
+        <script src="/assets/js/theme.bundle.js"></script>
+        <!-- Load React -->
+        <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+        <!-- Load our React component. -->
+        <script type="text/babel" src="/component/Navigation.js"></script>
     </body>
 </html>
