@@ -3,7 +3,7 @@
 
 ## Deploy
  GitHubPage<br>
-- [Deploy](https://sanflat.github.io/PalText/index.html)
+- [Deploy](https://sanflat.github.io/pal-text/index.html)
 
 ## Get Started Command
 ```
